@@ -2,7 +2,7 @@ import time
 class LogManagement(object):
     def __init__(self,path):
         self.file =  open(path,'ab+')
-
+        print(path)
     def logRecord(self,text):
         plain = time.strftime('[%Y-%m-%d %H:%M:%S]',time.localtime(time.time()))+text+'\n'
         self.file.write(plain.encode('utf-8'))

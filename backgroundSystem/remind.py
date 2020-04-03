@@ -2,9 +2,10 @@ from log import *
 from my_email import *
 from database_manage import *
 import time
+import sys
 class Remind(object):
     def __init__(self):
-        self.loger = LogManagement('D:\\code\\python\\CourseRemind\\backgroundSystem\\log\\system_run_log.txt')
+        self.loger = LogManagement(sys.path[0]+'/log/system_run_log.txt')
         self.loger.logRecord('开启系统')
         self.week_today = self.getWeekToday()
         self.ema = MyEmail()
