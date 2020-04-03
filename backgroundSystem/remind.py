@@ -58,6 +58,17 @@ class Remind(object):
                         index = self.course_list.index(x)
                         #print(index)
                         del self.course_list[index]
+                else:
+                    time_cou = int(x[0:4])
+                    time_no = int(time.strftime('%H%M',time.localtime(time.time())))
+                    if(55 > time_cou - time_no):
+                        #sender_name,recver_name,subject,text
+                        # em.sendEmail('电磁汪','mason','您有新的课程','课程内容等.......')
+                        text = "课程名:%s\n上课时间:%s\n教室:%s\n\n\n\n祝好！\n谢谢！"%(x['course_name'],x['begin_time'],x['classroom'])
+                        self.ema.sendEmail(self.database.getUserEmail(int(x['course_id'])),'电磁汪','订阅者','15分钟后有课',text)
+                        index = self.course_list.index(x)
+                        #print(index)
+                        del self.course_list[index]
 
                 #if(time_now-time_temp)
 
