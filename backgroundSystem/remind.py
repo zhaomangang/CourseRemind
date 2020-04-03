@@ -21,11 +21,13 @@ class Remind(object):
         self.loger.logRecord('开始加载当日课表')
         #每天固定时段查询明天课表加载进系统
         result = self.database.getCourseDay(time.strftime('%Y%m%d',time.localtime(time.time())))
+      #  print(str(result))
         for x in result:
             self.course_list.append(x)
-            result = self.database.getCourseDay(self.getWeekToday())
+        result = self.database.getCourseDay(self.getWeekToday())
         for x in result:
             self.course_list.append(x)
+       # print('line29'+str(self.course_list))
         self.loger.logRecord('当日课表加载完成')
         self.ema.sendEmail(['zhaomangang@qq.com'],'电磁汪','mason','系统运行日志','系统启动成功')
         while True:
@@ -51,7 +53,9 @@ class Remind(object):
                 time_now_h = int(time.strftime('%H',time.localtime(time.time())))
                 if(time_course_h==time_now_h):
                     #print(time_course_m)
-                    if(15>time_course_m - int(time.strftime('%M',time.localtime(time.time())))):
+                    te = time_course_m-int((time.strftime('%M',time.localtime(time.time()))))
+   #                 print('line 57'+str(te))
+                    if(te>0 and te<15):
                         #sender_name,recver_name,subject,text
                         # em.sendEmail('电磁汪','mason','您有新的课程','课程内容等.......')
                         text = "课程名:%s\n上课时间:%s\n教室:%s\n\n\n\n祝好！\n谢谢！"%(x['course_name'],x['begin_time'],x['classroom'])
@@ -60,9 +64,15 @@ class Remind(object):
                         #print(index)
                         del self.course_list[index]
                 else:
-                    time_cou = int(x[0:4])
+                   # print('line63else')
+                    time_cou = int(x['begin_time'][0:4])
+      #              print(time_cou)
                     time_no = int(time.strftime('%H%M',time.localtime(time.time())))
-                    if(55 > time_cou - time_no):
+       #             print(time_no)
+                    te = time_cou - time_no
+                    
+                    if(55 > te and te >0):
+         #               print('line73::'+str(te))
                         #sender_name,recver_name,subject,text
                         # em.sendEmail('电磁汪','mason','您有新的课程','课程内容等.......')
                         text = "课程名:%s\n上课时间:%s\n教室:%s\n\n\n\n祝好！\n谢谢！"%(x['course_name'],x['begin_time'],x['classroom'])

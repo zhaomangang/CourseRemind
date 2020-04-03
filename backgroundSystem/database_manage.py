@@ -88,6 +88,7 @@ class DataBase(object):
         results = self.cursor.fetchall()
         return results
     def getCourseDay(self,time):
+  #      print('line91'+str(time))
         sql = """SELECT course_id,course_name,begin_time,classroom 
                 FROM course_info where begin_time REGEXP '^%s';"""%(time)
         #sql = "select *from course_info"
@@ -97,7 +98,7 @@ class DataBase(object):
             self.cursor.execute(sql)
             #    获取所有记录列表
             results = self.cursor.fetchall()
-            #print(str(results))
+#            print('line101'+str(results))
             for x in results:
                 dict_course = {'course_id':'','course_name':'','begin_time':'','classroom':''}
                 dict_course['course_id'] = x[0]
